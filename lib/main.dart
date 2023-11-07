@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:metropolly/routes/routes_consts.dart';
-import 'routes/app_routes.dart';
+import 'package:metropolly/app/routes/routes_consts.dart';
+import 'app/routes/app_routes.dart';
 
 void main() {
   runApp(const MyApp());
