@@ -12,8 +12,20 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formController = GlobalKey<FormState>();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _isPasswordVisible = false;
+
+  void turnPasswordVisible() {
+    setState(() {
+      if (_isPasswordVisible == false) {
+        _isPasswordVisible = true;
+      } else {
+        _isPasswordVisible = false;
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +74,22 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
                                   ),
                                 ),
+                                textInputAction: TextInputAction.next,
                               ),
                               const SizedBox(height: defaultSpacing),
                               TextFormField(
                                 controller: _passwordController,
-                                decoration: const InputDecoration(
-                                  label: Text('Email', style: TextStyle(color: Colors.white)),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                                decoration: InputDecoration(
+                                  label: const Text('Senha', style: TextStyle(color: Colors.white)),
+                                  border:
+                                      const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
+                                  suffixIcon: IconButton(
+                                    icon: const Icon(Icons.remove_red_eye),
+                                    onPressed: () => turnPasswordVisible(),
                                   ),
                                 ),
+                                textInputAction: TextInputAction.done,
+                                obscureText: _isPasswordVisible,
                               ),
                               const SizedBox(height: 8.0),
                               const Row(
