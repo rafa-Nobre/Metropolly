@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/widgets/app_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,11 +14,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text(
-          'Feed',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: const Text('Feed'),
         leading: Builder(
           builder: (context) {
             return IconButton(
@@ -37,12 +34,12 @@ class _HomePageState extends State<HomePage> {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: null,
         tooltip: 'Adicionar post',
-        backgroundColor: Colors.indigo,
-        shape: CircleBorder(),
-        child: Icon(
+        backgroundColor: primaryColor,
+        shape: const CircleBorder(),
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),

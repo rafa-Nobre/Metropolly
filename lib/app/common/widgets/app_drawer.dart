@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
 import 'package:metropolly/app/routes/routes_consts.dart';
 
@@ -19,7 +20,7 @@ class AppDrawer extends StatelessWidget {
             Container(
               width: drawerSize.width,
               height: drawerSize.height * .3,
-              decoration: const BoxDecoration(color: Colors.indigo),
+              decoration: BoxDecoration(color: primaryColor),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -55,7 +56,7 @@ class AppDrawer extends StatelessWidget {
                       child: const CommonText(text: 'Minhas Vagas'),
                     ),
                     TextButton(
-                      onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
+                      onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.login),
                       child: const CommonText(text: 'Sair'),
                     ),
                   ],

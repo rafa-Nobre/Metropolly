@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/routes/routes_consts.dart';
+import 'app/common/colors/global_theme.dart';
 import 'app/routes/app_routes.dart';
 
 void main() {
@@ -14,10 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: globalTheme(context),
       initialRoute: RoutesConsts.root,
       routes: appRoutes,
     );
