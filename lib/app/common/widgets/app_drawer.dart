@@ -53,7 +53,7 @@ class AppDrawer extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
-                      child: const CommonText(text: 'Minhas Vagas'),
+                      child: const CommonText(text: 'Minhas Publicações'),
                     ),
                     TextButton(
                       onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.login),

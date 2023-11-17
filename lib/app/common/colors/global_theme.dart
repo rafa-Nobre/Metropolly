@@ -16,7 +16,8 @@ ThemeData globalTheme(BuildContext context) {
       ),
     ),
     scaffoldBackgroundColor: Colors.white,
-    splashColor: secondaryColor,
+    splashColor: Colors.transparent,
+    hoverColor: Colors.transparent,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: secondaryColor,
