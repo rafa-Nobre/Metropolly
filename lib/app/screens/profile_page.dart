@@ -5,6 +5,12 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Olá Mundo');
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Perfil"),
+        centerTitle: true,
+      ),
+      body: const Text("Hello profile"),
+    );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
+import 'package:metropolly/app/routes/routes_consts.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -84,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                                   border:
                                       const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
                                   suffixIcon: IconButton(
-                                    icon: const Icon(Icons.remove_red_eye),
+                                    icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
                                     onPressed: () => turnPasswordVisible(),
                                   ),
                                 ),
@@ -122,9 +123,9 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-                const TextButton(
-                  onPressed: null,
-                  child: CommonText(text: 'Não possui acesso? Cadastre-se aqui!', textColor: Colors.white),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.signUp),
+                  child: const CommonText(text: 'Não possui acesso? Cadastre-se aqui!', textColor: Colors.white),
                 ),
               ],
             ),

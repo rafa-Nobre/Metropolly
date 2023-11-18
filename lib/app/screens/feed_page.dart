@@ -5,6 +5,6 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('Olá Feed');
+    return const Text('Olá Feed');
   }
 }

@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:metropolly/app/common/colors/app_colors.dart';
 import '../../routes/routes_consts.dart';
 
 PreferredSizeWidget applicationAppbar(String title, BuildContext context) {
   return AppBar(
-    title: const Text('Feed'),
+    title: Text(title),
     centerTitle: true,
     actions: [
-      IconButton(
+      const IconButton(
+        onPressed: null,
+        icon: Icon(Icons.search),
         splashRadius: 24.0,
-        onPressed: () => ModalRoute.of(context)?.settings.name != RoutesConsts.notification
-            ? Navigator.of(context).pushNamed(RoutesConsts.notification)
-            : null,
-        icon: ModalRoute.of(context)?.settings.name == RoutesConsts.notification
-            ? Icon(Icons.notifications, color: secondaryColor)
-            : Icon(Icons.notifications),
+      ),
+      Visibility(
+        visible: ModalRoute.of(context)?.settings.name != RoutesConsts.profile,
+        child: IconButton(
+          splashRadius: 24.0,
+          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.profile),
+          icon: const Icon(Icons.person),
+        ),
       ),
     ],
     leading: Builder(

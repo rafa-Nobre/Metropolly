@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/widgets/app_drawer.dart';
 import 'package:metropolly/app/common/widgets/appbar.dart';
 import 'package:metropolly/app/screens/feed_page.dart';
-import 'package:metropolly/app/screens/profile_page.dart';
+import 'package:metropolly/app/screens/notifications_page.dart';
 import 'package:metropolly/app/screens/settings_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,9 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _pageIndex = 0;
   final List<Widget> _pages = [
-    ProfilePage(),
-    FeedPage(),
-    SettingsPage(),
+    const NotificationsPage(),
+    const FeedPage(),
+    const SettingsPage(),
   ];
 
   @override
@@ -35,30 +34,20 @@ class _HomePageState extends State<HomePage> {
           });
         },
         selectedItemColor: Colors.amber,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: "Perfil",
+            icon: Icon(Icons.notifications),
+            label: "Notificações",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Feed",
+            icon: Icon(Icons.add),
+            label: "Criar",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: "Configurações",
+            label: "Ajustes",
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Adicionar post',
-        backgroundColor: primaryColor,
-        shape: const CircleBorder(),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
       ),
     );
   }
