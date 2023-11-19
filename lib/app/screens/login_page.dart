@@ -17,6 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
+  bool _isCheckboxSelected = true;
 
   void turnPasswordVisible() {
     setState(() {
@@ -25,6 +26,12 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         _isPasswordVisible = false;
       }
+    });
+  }
+
+  void selectCheckBox(bool? value) {
+    setState(() {
+      _isCheckboxSelected = value!;
     });
   }
 
@@ -93,14 +100,14 @@ class _LoginPageState extends State<LoginPage> {
                                 obscureText: _isPasswordVisible,
                               ),
                               const SizedBox(height: 8.0),
-                              const Row(
+                              Row(
                                 children: [
                                   Checkbox(
-                                    value: true,
-                                    onChanged: null,
+                                    value: _isCheckboxSelected,
+                                    onChanged: (bool? value) => selectCheckBox(value),
                                     checkColor: Colors.white,
                                   ),
-                                  CommonText(text: 'Lembrar de mim', textColor: Colors.white),
+                                  const CommonText(text: 'Lembrar de mim', textColor: Colors.white),
                                 ],
                               ),
                             ],
@@ -110,10 +117,10 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(height: 32.0),
                       SizedBox(
                         width: pageSize.width / 2,
-                        child: const ElevatedButton(
-                          onPressed: null,
-                          style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                          child: CommonText(text: 'Entrar', textColor: Colors.black),
+                        child: ElevatedButton(
+                          onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
+                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
+                          child: const CommonText(text: 'Entrar', textColor: Colors.black),
                         ),
                       ),
                       const TextButton(

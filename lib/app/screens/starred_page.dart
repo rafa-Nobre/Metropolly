@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class StarredPage extends StatelessWidget {
+  const StarredPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Configurações"),
+        title: const Text("Favoritos"),
         centerTitle: true,
       ),
-      body: const Text('Olá Setting'),
+      body: const Text("Favoritos"),
     );
   }
 }

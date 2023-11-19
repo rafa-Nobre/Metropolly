@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
 import 'package:metropolly/app/routes/routes_consts.dart';
+import 'package:metropolly/app/screens/login_page.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -47,17 +48,63 @@ class AppDrawer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
-                      child: const CommonText(text: 'Favoritos'),
+                    Row(
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.starred),
+                          splashRadius: 24.0,
+                          icon: Icon(Icons.star, color: secondaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.starred),
+                          child: const CommonText(text: "Favoritos"),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
-                      child: const CommonText(text: 'Minhas Publicações'),
+                    Row(
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.postList),
+                          splashRadius: 24.0,
+                          icon: Icon(Icons.list, color: secondaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.postList),
+                          child: const CommonText(text: "Minhas Publicações"),
+                        ),
+                      ],
                     ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.login),
-                      child: const CommonText(text: 'Sair'),
+                    Row(
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.settings),
+                          splashRadius: 24.0,
+                          icon: Icon(Icons.settings, color: secondaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.settings),
+                          child: const CommonText(text: "Configurações"),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: <Widget>[
+                        IconButton(
+                          onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute<void>(builder: (_) => const LoginPage()),
+                            ModalRoute.withName(RoutesConsts.root),
+                          ),
+                          splashRadius: 24.0,
+                          icon: Icon(Icons.logout, color: secondaryColor),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute<void>(builder: (_) => const LoginPage()),
+                            ModalRoute.withName(RoutesConsts.root),
+                          ),
+                          child: const CommonText(text: "Sair"),
+                        ),
+                      ],
                     ),
                   ],
                 ),

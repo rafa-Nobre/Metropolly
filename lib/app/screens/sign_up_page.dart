@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            onPressed: () => confirmationDialog(context, "Sair", "Deseja sair? Suas alterações serão perdidas."),
+            onPressed: () => confirmationDialog(context, "Sair", "Suas alterações serão perdidas."),
             icon: const Icon(Icons.arrow_back),
           ),
         ),

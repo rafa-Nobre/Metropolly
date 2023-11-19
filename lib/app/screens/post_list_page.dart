@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+class PostListPage extends StatelessWidget {
+  const PostListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Configurações"),
+        title: const Text("Meus Posts"),
         centerTitle: true,
       ),
-      body: const Text('Olá Setting'),
+      body: const Text("Ola posts"),
     );
   }
 }
