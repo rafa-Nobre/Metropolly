@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
+import 'package:metropolly/app/routes/routes_consts.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -63,7 +64,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             const Expanded(child: SizedBox()),
             ElevatedButton(
-              onPressed: null,
+              onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.devInfo),
               style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(secondaryColor)),
               child: const CommonText(
                 text: "Informações do desenvolvedor",
