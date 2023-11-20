@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import '../screens/post_creation_page.dart';
 import '../screens/post_list_page.dart';
 import '../screens/starred_page.dart';
 import './routes_consts.dart';
@@ -16,4 +17,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   RoutesConsts.settings: (context) => const SettingsPage(),
   RoutesConsts.starred: (context) => const StarredPage(),
   RoutesConsts.postList: (context) => const PostListPage(),
+  RoutesConsts.newPost: (context) => const PostCreationPage(),
 };

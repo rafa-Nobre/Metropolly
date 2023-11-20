@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/widgets/app_drawer.dart';
 import 'package:metropolly/app/screens/feed_page.dart';
 import 'package:metropolly/app/screens/notifications_page.dart';
-import 'package:metropolly/app/screens/post_creation_page.dart';
 import '../routes/routes_consts.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,12 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _pageIndex = 0;
-  final List<Widget> _pages = [
-    const FeedPage(),
-    const PostCreationPage(),
-    const NotificationsPage(),
-  ];
-
   String _appbarTitle = "";
 
   @override
@@ -29,16 +22,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   void changePage(int currentIndex) {
-    setState(() {
-      _pageIndex = currentIndex;
-      if (_pageIndex == 0) {
-        _appbarTitle = "Feed";
-      } else if (_pageIndex == 1) {
-        _appbarTitle = "Novo Post";
-      } else if (_pageIndex == 2) {
-        _appbarTitle = "Notificações";
-      }
-    });
+    if (currentIndex == 1) {
+      Navigator.of(context).pushNamed(RoutesConsts.newPost);
+    } else {
+      setState(() {
+        _pageIndex = currentIndex;
+        if (_pageIndex == 0) {
+          _appbarTitle = "Feed";
+        } else {
+          _appbarTitle = "Notificações";
+        }
+      });
+    }
+  }
+
+  Widget _screenBuilder(int index) {
+    switch (index) {
+      case 0:
+        return const FeedPage();
+      case 1:
+        return const SizedBox();
+      case 2:
+        return const NotificationsPage();
+      default:
+        return const SizedBox();
+    }
   }
 
   @override
@@ -75,7 +83,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       drawer: const AppDrawer(),
-      body: _pages[_pageIndex],
+      body: _screenBuilder(_pageIndex),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _pageIndex,
         onTap: (currentIndex) => changePage(currentIndex),
