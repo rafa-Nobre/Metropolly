@@ -76,7 +76,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
                   helperText: "Teste",
                 ),
                 maxLines: 8,
-                textInputAction: TextInputAction.next,
+                textInputAction: TextInputAction.done,
               ),
               const SizedBox(height: defaultSpacing),
               Row(
@@ -86,7 +86,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
                     onChanged: (bool? value) => _selectCheckBox(value),
                     checkColor: Colors.white,
                   ),
-                  const CommonText(text: "Thread normal"),
+                  const CommonText(text: "Oportunidade de experiência"),
                 ],
               ),
             ],

@@ -6,6 +6,7 @@ ThemeData globalTheme(BuildContext context) {
     primaryColor: primaryColor,
     colorScheme: Theme.of(context).colorScheme.copyWith(secondary: secondaryColor),
     appBarTheme: AppBarTheme(
+      elevation: 0.0,
       iconTheme: const IconThemeData(
         color: Colors.white,
       ),

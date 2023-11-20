@@ -53,11 +53,11 @@ class AppDrawer extends StatelessWidget {
                         IconButton(
                           onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.starred),
                           splashRadius: 24.0,
-                          icon: Icon(Icons.star, color: secondaryColor),
+                          icon: Icon(Icons.bookmark, color: secondaryColor),
                         ),
                         TextButton(
                           onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.starred),
-                          child: const CommonText(text: "Favoritos"),
+                          child: const CommonText(text: "Posts salvos"),
                         ),
                       ],
                     ),
@@ -70,7 +70,7 @@ class AppDrawer extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.postList),
-                          child: const CommonText(text: "Minhas Publicações"),
+                          child: const CommonText(text: "Meus posts"),
                         ),
                       ],
                     ),
