@@ -9,4 +9,5 @@ class RoutesConsts {
   static const newPost = '/newpost';
   static const postInfo = '/postinfo';
   static const forgetPassword = '/forgotpassword';
+  static const devInfo = '/devInfo';
 }

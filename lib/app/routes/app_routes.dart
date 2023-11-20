@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:metropolly/app/screens/forget_password_page.dart';
-import 'package:metropolly/app/screens/post_info_page.dart';
+import '../screens/dev_info_page.dart';
+import '../screens/forget_password_page.dart';
+import '../screens/post_info_page.dart';
 import '../screens/post_creation_page.dart';
 import '../screens/post_list_page.dart';
 import '../screens/starred_page.dart';
@@ -22,4 +23,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   RoutesConsts.newPost: (context) => const PostCreationPage(),
   RoutesConsts.postInfo: (context) => const PostInfoPage(),
   RoutesConsts.forgetPassword: (context) => const ForgetPasswordPage(),
+  RoutesConsts.devInfo: (context) => const DevInfoPage(),
 };

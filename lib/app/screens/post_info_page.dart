@@ -10,7 +10,7 @@ class PostInfoPage extends StatefulWidget {
 }
 
 class _PostInfoPageState extends State<PostInfoPage> {
-  bool isExperience = false; //virá por rota
+  bool isExperience = true; //virá por rota
   bool _isStarred = false;
 
   final TextEditingController _myCommentController = TextEditingController();
