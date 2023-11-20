@@ -126,13 +126,13 @@ class _LoginPageState extends State<LoginPage> {
                         width: pageSize.width / 2,
                         child: ElevatedButton(
                           onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
-                          style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
+                          style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(secondaryColor)),
                           child: const CommonText(text: 'Entrar', textColor: Colors.black),
                         ),
                       ),
-                      const TextButton(
-                        onPressed: null,
-                        child: CommonText(text: 'Esqueci minha senha!', textColor: Colors.white),
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pushNamed(RoutesConsts.forgetPassword),
+                        child: const CommonText(text: 'Esqueci minha senha!', textColor: Colors.white),
                       ),
                     ],
                   ),

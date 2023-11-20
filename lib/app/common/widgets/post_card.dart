@@ -43,11 +43,13 @@ class FeedItemCard extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0, overflow: TextOverflow.ellipsis),
                   ),
                   SizedBox(height: minorSpacing),
-                  Text(
-                    "Lorem ipsun sid auhguahsua gauhgaushusahgu aughasf aughaugha augh",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      overflow: TextOverflow.clip,
+                  Expanded(
+                    child: Text(
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        overflow: TextOverflow.clip,
+                      ),
                     ),
                   ),
                 ],

@@ -56,13 +56,15 @@ class _HomePageState extends State<HomePage> {
         title: Text(_appbarTitle),
         centerTitle: true,
         actions: [
-          Visibility(
-            visible: _pageIndex == 0,
-            child: const IconButton(
-              onPressed: null,
-              icon: Icon(Icons.search),
-              splashRadius: 24.0,
-            ),
+          const IconButton(
+            onPressed: null,
+            icon: Icon(Icons.search),
+            splashRadius: 24.0,
+          ),
+          const IconButton(
+            splashRadius: 24.0,
+            onPressed: null,
+            icon: Icon(Icons.filter_alt_rounded),
           ),
           IconButton(
             splashRadius: 24.0,

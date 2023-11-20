@@ -9,7 +9,15 @@ class FeedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(defaultSpacing),
-      child: FeedItemCard(),
+      child: Column(
+        children: [
+          FeedItemCard(),
+          SizedBox(height: 16),
+          FeedItemCard(),
+          SizedBox(height: 16),
+          FeedItemCard(),
+        ],
+      ),
     );
   }
 }

@@ -8,4 +8,5 @@ class RoutesConsts {
   static const postList = '/postlist';
   static const newPost = '/newpost';
   static const postInfo = '/postinfo';
+  static const forgetPassword = '/forgotpassword';
 }

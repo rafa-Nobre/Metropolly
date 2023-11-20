@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../common/constants/metrics.dart';
+import '../common/widgets/post_card.dart';
 
 class StarredPage extends StatelessWidget {
   const StarredPage({super.key});
@@ -9,8 +11,33 @@ class StarredPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Favoritos"),
         centerTitle: true,
+        actions: const <Widget>[
+          IconButton(
+            onPressed: null,
+            icon: Icon(Icons.search),
+            splashRadius: 24.0,
+          ),
+          IconButton(
+            splashRadius: 24.0,
+            onPressed: null,
+            icon: Icon(Icons.filter_alt_rounded),
+          ),
+        ],
       ),
-      body: const Text("Favoritos"),
+      body: const Padding(
+        padding: EdgeInsets.all(defaultSpacing),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              FeedItemCard(),
+              SizedBox(height: 16),
+              FeedItemCard(),
+              SizedBox(height: 16),
+              FeedItemCard(),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
