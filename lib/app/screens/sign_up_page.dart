@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
-import 'package:metropolly/app/common/widgets/confirmation_dialog.dart';
+import '../common/colors/app_colors.dart';
 import '../common/widgets/common_text.dart';
+import '../routes/routes_consts.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -13,6 +14,7 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formController = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _studentIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -47,13 +49,46 @@ class _SignUpPageState extends State<SignUpPage> {
     var width = MediaQuery.of(context).size.width;
     var containerHeight = height - 120;
 
+    Future<void> confirmationDialog(String dialogTitle, String dialogContent) {
+      return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(dialogTitle),
+            content: Text(dialogContent),
+            actions: [
+              IconButton(
+                onPressed: () => Navigator.of(context).pop(),
+                splashRadius: 24.0,
+                icon: Icon(
+                  Icons.cancel,
+                  color: cancelColor,
+                  size: 24.0,
+                ),
+              ),
+              IconButton(
+                onPressed: () => Navigator.of(context)
+                    .pushNamedAndRemoveUntil(RoutesConsts.login, ModalRoute.withName(RoutesConsts.signUp)),
+                splashRadius: 24.0,
+                icon: Icon(
+                  Icons.check,
+                  color: confirmColor,
+                  size: 24.0,
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Cadastro"),
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            onPressed: () => confirmationDialog(context, "Sair", "Suas alterações serão perdidas."),
+            onPressed: () => confirmationDialog("Sair", "Suas alterações serão perdidas."),
             icon: const Icon(Icons.arrow_back),
           ),
         ),
@@ -69,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: containerHeight / 1.8,
+                  height: containerHeight / 1.6,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -78,6 +113,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: "Nome",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                          ),
+                        ),
+                        textInputAction: TextInputAction.next,
+                      ),
+                      TextFormField(
+                        controller: _usernameController,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          labelText: "Nome de usuário",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
                           ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
-import 'package:metropolly/app/routes/routes_consts.dart';
 
 Future<void> confirmationDialog(BuildContext context, String dialogTitle, String dialogContent) {
   return showDialog<void>(
@@ -20,7 +19,7 @@ Future<void> confirmationDialog(BuildContext context, String dialogTitle, String
             ),
           ),
           IconButton(
-            onPressed: () => Navigator.of(context).popUntil(ModalRoute.withName(RoutesConsts.login)),
+            onPressed: null,
             splashRadius: 24.0,
             icon: Icon(
               Icons.check,

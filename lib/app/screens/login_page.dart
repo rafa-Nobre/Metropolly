@@ -42,9 +42,16 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          color: primaryColor,
           height: pageSize.height,
           width: pageSize.width,
+          //color: primaryColor,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [primaryColor, Colors.blue.shade900],
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(defaultSpacing),
             child: Column(

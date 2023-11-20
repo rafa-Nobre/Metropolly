@@ -7,4 +7,5 @@ class RoutesConsts {
   static const starred = '/starred';
   static const postList = '/postlist';
   static const newPost = '/newpost';
+  static const postInfo = '/postinfo';
 }

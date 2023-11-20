@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:metropolly/app/screens/post_info_page.dart';
 import '../screens/post_creation_page.dart';
 import '../screens/post_list_page.dart';
 import '../screens/starred_page.dart';
@@ -18,4 +19,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   RoutesConsts.starred: (context) => const StarredPage(),
   RoutesConsts.postList: (context) => const PostListPage(),
   RoutesConsts.newPost: (context) => const PostCreationPage(),
+  RoutesConsts.postInfo: (context) => const PostInfoPage(),
 };
