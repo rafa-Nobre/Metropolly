@@ -10,7 +10,7 @@ class PostListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favoritos"),
+        title: const Text("Meus Posts"),
         centerTitle: true,
         actions: const <Widget>[
           IconButton(

@@ -9,7 +9,7 @@ class StarredPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Favoritos"),
+        title: const Text("Posts Salvos"),
         centerTitle: true,
         actions: const <Widget>[
           IconButton(

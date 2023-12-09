@@ -71,22 +71,29 @@ class _PostCreationPageState extends State<PostCreationPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
                   ),
-                  alignLabelWithHint: true,
-                  hintMaxLines: 20,
-                  helperText: "Teste",
                 ),
                 maxLines: 8,
                 textInputAction: TextInputAction.done,
               ),
               const SizedBox(height: defaultSpacing),
               Row(
-                children: [
+                children: <Widget>[
                   Checkbox(
                     value: _isCheckboxSelected,
                     onChanged: (bool? value) => _selectCheckBox(value),
                     checkColor: Colors.white,
                   ),
-                  const CommonText(text: "Oportunidade de experiência"),
+                  const CommonText(text: "Oportunidade"),
+                  // Tooltip(
+                  //   message: "Teste",
+                  //   child: IconButton(
+                  //     icon: const Icon(
+                  //       Icons.question_mark,
+                  //       size: 16,
+                  //     ),
+                  //     onPressed: () => print("question"),
+                  //   ),
+                  // ),
                 ],
               ),
             ],
