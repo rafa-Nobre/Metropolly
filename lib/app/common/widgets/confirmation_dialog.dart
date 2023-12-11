@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 
-Future<void> confirmationDialog(BuildContext context, String dialogTitle, String dialogContent) {
-  return showDialog<void>(
+Future<void> confirmationDialog(BuildContext context, String dialogTitle, String dialogContent, Function onConfirm) {
+  return showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
@@ -19,7 +19,7 @@ Future<void> confirmationDialog(BuildContext context, String dialogTitle, String
             ),
           ),
           IconButton(
-            onPressed: null,
+            onPressed: () => onConfirm(),
             splashRadius: 24.0,
             icon: Icon(
               Icons.check,

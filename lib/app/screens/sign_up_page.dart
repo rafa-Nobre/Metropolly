@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
-import '../common/colors/app_colors.dart';
+import 'package:metropolly/app/common/widgets/info_dialog.dart';
+import 'package:metropolly/app/core/services/auth_service.dart';
 import '../common/widgets/common_text.dart';
+import '../common/widgets/confirmation_dialog.dart';
 import '../routes/routes_consts.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -12,11 +14,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final AuthService _auth = AuthService();
+
   final GlobalKey<FormState> _formController = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _studentIDController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController = TextEditingController();
 
@@ -43,44 +46,25 @@ class _SignUpPageState extends State<SignUpPage> {
     });
   }
 
+  void _onSignUp() async {
+    String username = _usernameController.text;
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    await _auth.signUpUserMethod(email, password).then((value) {
+      if (value != null) {
+        infoDialog(context, "Cadastro realizado", "Seja bem vindo ao futuro!");
+        Navigator.of(context).pushNamed(RoutesConsts.root);
+      } else {
+        infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
-    var width = MediaQuery.of(context).size.width;
     var containerHeight = height - 120;
-
-    Future<void> confirmationDialog(String dialogTitle, String dialogContent) {
-      return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(dialogTitle),
-            content: Text(dialogContent),
-            actions: [
-              IconButton(
-                onPressed: () => Navigator.of(context).pop(),
-                splashRadius: 24.0,
-                icon: Icon(
-                  Icons.cancel,
-                  color: cancelColor,
-                  size: 24.0,
-                ),
-              ),
-              IconButton(
-                onPressed: () => Navigator.of(context)
-                    .pushNamedAndRemoveUntil(RoutesConsts.login, ModalRoute.withName(RoutesConsts.signUp)),
-                splashRadius: 24.0,
-                icon: Icon(
-                  Icons.check,
-                  color: confirmColor,
-                  size: 24.0,
-                ),
-              ),
-            ],
-          );
-        },
-      );
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -88,109 +72,144 @@ class _SignUpPageState extends State<SignUpPage> {
         centerTitle: true,
         leading: Builder(
           builder: (context) => IconButton(
-            onPressed: () => confirmationDialog("Sair", "Suas alterações serão perdidas."),
+            onPressed: () => confirmationDialog(
+              context,
+              "Sair",
+              "Suas alterações serão perdidas.",
+              () => Navigator.of(context).pushNamedAndRemoveUntil(
+                RoutesConsts.login,
+                ModalRoute.withName(RoutesConsts.signUp),
+              ),
+            ),
             icon: const Icon(Icons.arrow_back),
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(largeSpacing),
-        child: Form(
-          key: _formController,
-          child: SizedBox(
-            height: containerHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: containerHeight / 1.6,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      TextFormField(
-                        controller: _nameController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: "Nome",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(largeSpacing),
+          child: Form(
+            key: _formController,
+            child: SizedBox(
+              height: containerHeight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: containerHeight / 1.6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        TextFormField(
+                          controller: _nameController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: "Nome e sobrenome",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                            ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo obrigatório";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      TextFormField(
-                        controller: _usernameController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: "Nome de usuário",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                        TextFormField(
+                          controller: _usernameController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: "Nome de usuário",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                            ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo obrigatório";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                        TextFormField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: const InputDecoration(
+                            labelText: "Email",
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                            ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo obrigatório";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      TextFormField(
-                        controller: _studentIDController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: "Matrícula",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.elliptical(8, 8)),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            labelText: "Senha",
+                            border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
+                            suffixIcon: IconButton(
+                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              onPressed: () => turnPasswordVisible(),
+                            ),
                           ),
+                          textInputAction: TextInputAction.next,
+                          obscureText: _isPasswordVisible,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo obrigatório";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          labelText: "Senha",
-                          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
-                          suffixIcon: IconButton(
-                            icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
-                            onPressed: () => turnPasswordVisible(),
+                        TextFormField(
+                          controller: _repeatPasswordController,
+                          decoration: InputDecoration(
+                            labelText: "Repita sua senha",
+                            border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
+                            suffixIcon: IconButton(
+                              icon: Icon(_isRepeatPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              onPressed: () => turnRepeatPasswordVisible(),
+                            ),
                           ),
+                          textInputAction: TextInputAction.done,
+                          obscureText: _isRepeatPasswordVisible,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Campo obrigatório";
+                            } else if (value != _passwordController.text) {
+                              return "Senhas não são iguais!";
+                            } else {
+                              return null;
+                            }
+                          },
                         ),
-                        textInputAction: TextInputAction.next,
-                        obscureText: _isPasswordVisible,
-                      ),
-                      TextFormField(
-                        controller: _repeatPasswordController,
-                        decoration: InputDecoration(
-                          labelText: "Repita sua senha",
-                          border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
-                          suffixIcon: IconButton(
-                            icon: Icon(_isRepeatPasswordVisible ? Icons.visibility : Icons.visibility_off),
-                            onPressed: () => turnRepeatPasswordVisible(),
-                          ),
-                        ),
-                        textInputAction: TextInputAction.done,
-                        obscureText: _isRepeatPasswordVisible,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: defaultSpacing),
-                SizedBox(
-                  width: width / 4,
-                  child: const ElevatedButton(
-                    onPressed: null,
-                    style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                    child: CommonText(text: 'Cadastrar', textColor: Colors.black),
+                  const SizedBox(height: defaultSpacing),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formController.currentState!.validate()) _onSignUp();
+                    },
+                    style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
+                    child: const CommonText(text: 'Cadastrar', textColor: Colors.black),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

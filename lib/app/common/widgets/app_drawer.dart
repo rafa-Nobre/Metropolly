@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
@@ -98,10 +99,13 @@ class AppDrawer extends StatelessWidget {
                           icon: Icon(Icons.logout, color: secondaryColor),
                         ),
                         TextButton(
-                          onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute<void>(builder: (_) => const LoginPage()),
-                            ModalRoute.withName(RoutesConsts.root),
-                          ),
+                          onPressed: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute<void>(builder: (_) => const LoginPage()),
+                              ModalRoute.withName(RoutesConsts.root),
+                            );
+                          },
                           child: const CommonText(text: "Sair"),
                         ),
                       ],

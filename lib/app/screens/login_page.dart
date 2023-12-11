@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 32.0),
                       SizedBox(
-                        width: pageSize.width / 2,
+                        width: pageSize.width / 4,
                         child: ElevatedButton(
                           onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
                           style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(secondaryColor)),
