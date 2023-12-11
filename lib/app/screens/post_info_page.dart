@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
+import 'package:metropolly/app/common/widgets/info_snackbar.dart';
 
 class PostInfoPage extends StatefulWidget {
   const PostInfoPage({super.key});
@@ -25,17 +26,6 @@ class _PostInfoPageState extends State<PostInfoPage> {
     });
   }
 
-  void _showStarredSnackBar(BuildContext context) {
-    final snackBar = SnackBar(
-      content: const Text("Post adicionado aos favoritos!"),
-      duration: const Duration(seconds: 3),
-      action: SnackBarAction(label: "Desfazer", onPressed: () => addOrRemoveToStarred()),
-    );
-
-    addOrRemoveToStarred();
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -52,7 +42,17 @@ class _PostInfoPageState extends State<PostInfoPage> {
             splashRadius: 24.0,
           ),
           IconButton(
-            onPressed: _isStarred ? () => addOrRemoveToStarred() : () => _showStarredSnackBar(context),
+            onPressed: _isStarred
+                ? () => addOrRemoveToStarred()
+                : () {
+                    addOrRemoveToStarred();
+                    showInfoSnackBar(
+                      context,
+                      "Post salvo!",
+                      actionTitle: "Desfazer",
+                      actionCallback: addOrRemoveToStarred,
+                    );
+                  },
             icon: Icon(
               Icons.bookmark,
               color: _isStarred ? secondaryColor : Colors.white,

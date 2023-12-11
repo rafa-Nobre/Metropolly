@@ -4,6 +4,9 @@ import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
 import 'package:metropolly/app/routes/routes_consts.dart';
 
+import '../common/widgets/info_dialog.dart';
+import '../core/services/auth_service.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -12,6 +15,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final AuthService _auth = AuthService();
+
   final GlobalKey<FormState> _formController = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -32,6 +37,29 @@ class _LoginPageState extends State<LoginPage> {
   void selectCheckBox(bool? value) {
     setState(() {
       _isCheckboxSelected = value!;
+    });
+  }
+
+  void _showInfoSnackBar(BuildContext context) {
+    const snackBar = SnackBar(
+      content: Text("Olá. Bem vindo de volta!"),
+      duration: Duration(seconds: 2),
+    );
+
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _onSignIn() async {
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    await _auth.signInUserMethod(email, password).then((value) {
+      if (value != null) {
+        _showInfoSnackBar(context);
+        Navigator.of(context).pushNamed(RoutesConsts.root);
+      } else {
+        infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
+      }
     });
   }
 
