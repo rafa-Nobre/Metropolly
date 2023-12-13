@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
+import 'package:metropolly/app/common/constants/loading_state.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/common_text.dart';
 import 'package:metropolly/app/routes/routes_consts.dart';
-
-import '../common/widgets/info_dialog.dart';
+import '../common/widgets/info_snackbar.dart';
 import '../core/services/auth_service.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,15 +21,17 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _isPasswordVisible = false;
+  bool _isPasswordObscure = true;
   bool _isCheckboxSelected = true;
+
+  LoadingState? requisition;
 
   void turnPasswordVisible() {
     setState(() {
-      if (_isPasswordVisible == false) {
-        _isPasswordVisible = true;
+      if (_isPasswordObscure == false) {
+        _isPasswordObscure = true;
       } else {
-        _isPasswordVisible = false;
+        _isPasswordObscure = false;
       }
     });
   }
@@ -40,27 +42,37 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _showInfoSnackBar(BuildContext context) {
-    const snackBar = SnackBar(
-      content: Text("Olá. Bem vindo de volta!"),
-      duration: Duration(seconds: 2),
-    );
-
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-
   void _onSignIn() async {
     String email = _emailController.text;
     String password = _passwordController.text;
 
+    requisition = LoadingState.loading;
+
     await _auth.signInUserMethod(email, password).then((value) {
       if (value != null) {
-        _showInfoSnackBar(context);
+        requisition = LoadingState.completed;
+        showInfoSnackBar(context, "Olá. Bem vindo de volta!");
+        //Navigator.of(context).popAndPushNamed(RoutesConsts.root);
         Navigator.of(context).pushNamed(RoutesConsts.root);
       } else {
-        infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
+        showInfoSnackBar(
+          context,
+          "Ops! Não foi possível validar suas credenciais.",
+          duration: 3,
+          icon: Icons.error,
+          iconColor: alertColor,
+        );
       }
     });
+  }
+
+  @override
+  void dispose() {
+    if (_formController.currentState != null) _formController.currentState!.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+
+    super.dispose;
   }
 
   @override
@@ -127,12 +139,12 @@ class _LoginPageState extends State<LoginPage> {
                                   border:
                                       const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
                                   suffixIcon: IconButton(
-                                    icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                                    icon: Icon(_isPasswordObscure ? Icons.visibility : Icons.visibility_off),
                                     onPressed: () => turnPasswordVisible(),
                                   ),
                                 ),
                                 textInputAction: TextInputAction.done,
-                                obscureText: _isPasswordVisible,
+                                obscureText: _isPasswordObscure,
                               ),
                               const SizedBox(height: 8.0),
                               Row(
@@ -153,9 +165,11 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         width: pageSize.width / 4,
                         child: ElevatedButton(
-                          onPressed: () => Navigator.of(context).popAndPushNamed(RoutesConsts.root),
+                          onPressed: _onSignIn,
                           style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(secondaryColor)),
-                          child: const CommonText(text: 'Entrar', textColor: Colors.black),
+                          child: requisition == LoadingState.loading && requisition != null
+                              ? const CircularProgressIndicator()
+                              : const CommonText(text: 'Entrar', textColor: Colors.black),
                         ),
                       ),
                       TextButton(

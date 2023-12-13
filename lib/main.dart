@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Metropolly',
       debugShowCheckedModeBanner: false,
       theme: globalTheme(context),
-      initialRoute: RoutesConsts.root,
+      initialRoute: RoutesConsts.login,
       routes: appRoutes,
     );
   }

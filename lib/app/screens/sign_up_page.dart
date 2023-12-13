@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/info_dialog.dart';
 import 'package:metropolly/app/core/services/auth_service.dart';
+import '../common/constants/loading_state.dart';
 import '../common/widgets/common_text.dart';
 import '../common/widgets/confirmation_dialog.dart';
 import '../routes/routes_consts.dart';
@@ -26,6 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
   bool _isPasswordVisible = false;
   bool _isRepeatPasswordVisible = false;
 
+  LoadingState? requisition;
+
   void turnPasswordVisible() {
     setState(() {
       if (_isPasswordVisible == false) {
@@ -47,18 +50,37 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void _onSignUp() async {
-    //String username = _usernameController.text;
-    String email = _emailController.text;
-    String password = _passwordController.text;
+    if (_formController.currentState != null) {
+      requisition = LoadingState.loading;
+      if (_formController.currentState!.validate()) {
+        //String username = _usernameController.text;
+        String email = _emailController.text;
+        String password = _passwordController.text;
 
-    await _auth.signUpUserMethod(email, password).then((value) {
-      if (value != null) {
-        infoDialog(context, "Cadastro realizado", "Seja bem vindo ao futuro!");
-        Navigator.of(context).pushNamed(RoutesConsts.root);
+        await _auth.signUpUserMethod(email, password).then((value) {
+          if (value != null) {
+            requisition = LoadingState.completed;
+            infoDialog(context, "Cadastro realizado", "Seja bem vindo ao futuro!");
+            Navigator.of(context).pushNamed(RoutesConsts.root);
+          } else {
+            infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
+          }
+        });
       } else {
-        infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
+        requisition = LoadingState.error;
       }
-    });
+    }
+  }
+
+  @override
+  void dispose() {
+    if (_formController.currentState != null) _formController.currentState!.dispose();
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _repeatPasswordController.dispose();
+
+    super.dispose;
   }
 
   @override
@@ -202,11 +224,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: defaultSpacing),
                   ElevatedButton(
-                    onPressed: () {
-                      if (_formController.currentState!.validate()) _onSignUp();
-                    },
+                    onPressed: _onSignUp,
                     style: const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.amber)),
-                    child: const CommonText(text: 'Cadastrar', textColor: Colors.black),
+                    child: requisition == LoadingState.loading && requisition != null
+                        ? const CircularProgressIndicator()
+                        : const CommonText(text: 'Cadastrar', textColor: Colors.black),
                   ),
                 ],
               ),
