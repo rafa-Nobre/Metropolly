@@ -46,7 +46,7 @@ class _PostInfoPageState extends State<PostInfoPage> {
                 ? () => addOrRemoveToStarred()
                 : () {
                     addOrRemoveToStarred();
-                    showInfoSnackBar(
+                    infoSnackBar(
                       context,
                       "Post salvo!",
                       actionTitle: "Desfazer",

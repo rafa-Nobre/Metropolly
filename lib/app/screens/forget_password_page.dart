@@ -31,7 +31,7 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
         await _auth.resetPasswordMethod(email).then((_) {
           requisition = LoadingState.completed;
 
-          showInfoSnackBar(
+          infoSnackBar(
             context,
             "Enviamos um email para sua caixa de entrada!",
             duration: 3,

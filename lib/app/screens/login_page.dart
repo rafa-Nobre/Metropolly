@@ -51,12 +51,12 @@ class _LoginPageState extends State<LoginPage> {
     await _auth.signInUserMethod(email, password).then((value) {
       if (value != null) {
         requisition = LoadingState.completed;
-        showInfoSnackBar(context, "Olá. Bem vindo de volta!");
+        infoSnackBar(context, "Olá. Bem vindo de volta!");
         //Navigator.of(context).popAndPushNamed(RoutesConsts.root);
         Navigator.of(context).pushNamed(RoutesConsts.root);
       } else {
         requisition = LoadingState.error;
-        showInfoSnackBar(
+        infoSnackBar(
           context,
           "Ops! Não foi possível validar suas credenciais.",
           duration: 3,
@@ -67,14 +67,14 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  @override
-  void dispose() {
-    if (_formController.currentState != null) _formController.currentState!.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
+  // @override
+  // void dispose() {
+  //   if (_formController.currentState != null) _formController.currentState!.dispose();
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
 
-    super.dispose;
-  }
+  //   super.dispose;
+  // }
 
   @override
   Widget build(BuildContext context) {

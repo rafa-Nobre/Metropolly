@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 import 'package:metropolly/app/common/widgets/info_dialog.dart';
+import 'package:metropolly/app/core/models/user_model.dart';
 import 'package:metropolly/app/core/services/auth_service.dart';
+import 'package:metropolly/app/core/services/user_register_service.dart';
 import '../common/constants/loading_state.dart';
 import '../common/widgets/common_text.dart';
 import '../common/widgets/confirmation_dialog.dart';
@@ -24,27 +26,27 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _repeatPasswordController = TextEditingController();
 
-  bool _isPasswordVisible = false;
-  bool _isRepeatPasswordVisible = false;
+  bool _isPasswordObscure = true;
+  bool _isRepeatePasswordObscure = true;
 
   LoadingState? requisition;
 
   void turnPasswordVisible() {
     setState(() {
-      if (_isPasswordVisible == false) {
-        _isPasswordVisible = true;
+      if (_isPasswordObscure == false) {
+        _isPasswordObscure = true;
       } else {
-        _isPasswordVisible = false;
+        _isPasswordObscure = false;
       }
     });
   }
 
   void turnRepeatPasswordVisible() {
     setState(() {
-      if (_isRepeatPasswordVisible == false) {
-        _isRepeatPasswordVisible = true;
+      if (_isRepeatePasswordObscure == false) {
+        _isRepeatePasswordObscure = true;
       } else {
-        _isRepeatPasswordVisible = false;
+        _isRepeatePasswordObscure = false;
       }
     });
   }
@@ -53,18 +55,26 @@ class _SignUpPageState extends State<SignUpPage> {
     if (_formController.currentState != null) {
       requisition = LoadingState.loading;
       if (_formController.currentState!.validate()) {
-        //String username = _usernameController.text;
+        String name = _nameController.text;
+        String username = _usernameController.text;
         String email = _emailController.text;
         String password = _passwordController.text;
 
-        await _auth.signUpUserMethod(email, password).then((value) {
-          if (value != null) {
-            requisition = LoadingState.completed;
-            infoDialog(context, "Cadastro realizado", "Seja bem vindo ao futuro!");
-            Navigator.of(context).pushNamed(RoutesConsts.root);
-          } else {
-            infoDialog(context, "Ops!", "Ocorreu um erro ao realizar o cadastro");
-          }
+        final user = UserModel(name: name, username: username, email: email, password: password);
+        final userService = UserRegisterService();
+
+        await userService.createUser(user, context).then((_) async {
+          await _auth.signUpUserMethod(email, password).then((value) {
+            if (value != null) {
+              requisition = LoadingState.completed;
+              showDialog(
+                  context: context, builder: (_) => infoDialog("Cadastro realizado.", "Seja bem vindo ao futuro!"));
+              Navigator.of(context).pushNamed(RoutesConsts.root);
+            } else {
+              showDialog(
+                  context: context, builder: (_) => infoDialog("Ops!", "Ocorreu um erro ao realizar o cadastro."));
+            }
+          });
         });
       } else {
         requisition = LoadingState.error;
@@ -72,16 +82,16 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
-  @override
-  void dispose() {
-    if (_formController.currentState != null) _formController.currentState!.dispose();
-    _nameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _repeatPasswordController.dispose();
+  // @override
+  // void dispose() {
+  //   if (_formController.currentState != null) _formController.currentState!.dispose();
+  //   _nameController.dispose();
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  //   _repeatPasswordController.dispose();
 
-    super.dispose;
-  }
+  //   super.dispose;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,12 +193,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             labelText: "Senha",
                             border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
                             suffixIcon: IconButton(
-                              icon: Icon(_isPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              icon: Icon(_isPasswordObscure ? Icons.visibility : Icons.visibility_off),
                               onPressed: () => turnPasswordVisible(),
                             ),
                           ),
                           textInputAction: TextInputAction.next,
-                          obscureText: _isPasswordVisible,
+                          obscureText: _isPasswordObscure,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Campo obrigatório";
@@ -203,12 +213,12 @@ class _SignUpPageState extends State<SignUpPage> {
                             labelText: "Repita sua senha",
                             border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.elliptical(8, 8))),
                             suffixIcon: IconButton(
-                              icon: Icon(_isRepeatPasswordVisible ? Icons.visibility : Icons.visibility_off),
+                              icon: Icon(_isRepeatePasswordObscure ? Icons.visibility : Icons.visibility_off),
                               onPressed: () => turnRepeatPasswordVisible(),
                             ),
                           ),
                           textInputAction: TextInputAction.done,
-                          obscureText: _isRepeatPasswordVisible,
+                          obscureText: _isRepeatePasswordObscure,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return "Campo obrigatório";

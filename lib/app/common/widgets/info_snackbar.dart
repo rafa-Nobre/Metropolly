@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
 
-void showInfoSnackBar(BuildContext context, String info,
+void infoSnackBar(BuildContext context, String info,
     {Function? actionCallback, String? actionTitle, int duration = 2, IconData? icon, Color? iconColor}) {
   final snackBar = SnackBar(
     content: icon != null
