@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../common/constants/metrics.dart';
-import '../common/widgets/post_card.dart';
 
 class StarredPage extends StatelessWidget {
   const StarredPage({super.key});
@@ -29,11 +28,11 @@ class StarredPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              FeedItemCard(),
-              SizedBox(height: 16),
-              FeedItemCard(),
-              SizedBox(height: 16),
-              FeedItemCard(),
+              // FeedItemCard(),
+              // SizedBox(height: 16),
+              // FeedItemCard(),
+              // SizedBox(height: 16),
+              // FeedItemCard(),
             ],
           ),
         ),

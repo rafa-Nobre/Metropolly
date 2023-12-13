@@ -17,11 +17,11 @@ class UserRegisterService {
           ),
         )
         .catchError((error, stackTrace) {
-      showDialog(
-        context: context,
-        builder: (_) => infoDialog("Ops!", "Algo deu errado."),
-      );
-      print(error.toString());
+      return error;
+      // return showDialog(
+      //   context: context,
+      //   builder: (_) => infoDialog("Ops!", "Algo deu errado."),
+      // );
     });
   }
 }

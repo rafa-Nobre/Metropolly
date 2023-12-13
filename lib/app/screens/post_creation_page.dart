@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:metropolly/app/common/colors/app_colors.dart';
 import 'package:metropolly/app/common/constants/metrics.dart';
+import 'package:metropolly/app/core/models/post_model.dart';
 import '../common/widgets/common_text.dart';
+import '../core/services/post_service.dart';
 
 class PostCreationPage extends StatefulWidget {
   const PostCreationPage({super.key});
@@ -12,14 +14,14 @@ class PostCreationPage extends StatefulWidget {
 
 class _PostCreationPageState extends State<PostCreationPage> {
   bool _isTitleDone = false;
-  bool _isCheckboxSelected = false;
+  bool _isOportunityPost = false;
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
   void _selectCheckBox(bool? value) {
     setState(() {
-      _isCheckboxSelected = value!;
+      _isOportunityPost = value!;
     });
   }
 
@@ -37,6 +39,19 @@ class _PostCreationPageState extends State<PostCreationPage> {
   void dispose() {
     _titleController.dispose();
     super.dispose();
+  }
+
+  void onCreatePost() async {
+    String title = _titleController.text;
+    String? description = _descriptionController.text.isEmpty ? null : _descriptionController.text;
+    bool oportunity = _isOportunityPost;
+
+    final post = PostModel(title: title, description: description, isOportunity: oportunity);
+    final postService = PostService();
+
+    await postService.createPost(post, context).then((_) {
+      Navigator.of(context).pop();
+    });
   }
 
   @override
@@ -79,7 +94,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
               Row(
                 children: <Widget>[
                   Checkbox(
-                    value: _isCheckboxSelected,
+                    value: _isOportunityPost,
                     onChanged: (bool? value) => _selectCheckBox(value),
                     checkColor: Colors.white,
                   ),
@@ -101,7 +116,7 @@ class _PostCreationPageState extends State<PostCreationPage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _isTitleDone ? () => Navigator.of(context).pop() : null,
+        onPressed: _isTitleDone ? onCreatePost : null,
         elevation: 0.0,
         backgroundColor: _isTitleDone ? secondaryColor : Colors.grey,
         child: const Icon(Icons.done),

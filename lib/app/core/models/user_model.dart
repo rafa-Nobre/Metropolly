@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
-  final int? id;
+  final String? id;
   final String name;
   final String username;
   final String email;
@@ -24,9 +26,20 @@ class UserModel {
     };
   }
 
+  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    final data = document.data()!;
+    return UserModel(
+      id: document.id,
+      name: data["name"],
+      username: data["username"],
+      email: data["email"],
+      password: data["password"],
+    );
+  }
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] != null ? map['id'] as int : null,
+      id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] as String,
       username: map['username'] as String,
       email: map['email'] as String,
