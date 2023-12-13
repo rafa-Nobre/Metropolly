@@ -55,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
         //Navigator.of(context).popAndPushNamed(RoutesConsts.root);
         Navigator.of(context).pushNamed(RoutesConsts.root);
       } else {
+        requisition = LoadingState.error;
         showInfoSnackBar(
           context,
           "Ops! Não foi possível validar suas credenciais.",

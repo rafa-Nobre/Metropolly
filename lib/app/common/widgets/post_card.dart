@@ -46,6 +46,7 @@ class FeedItemCard extends StatelessWidget {
                   Expanded(
                     child: Text(
                       "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.",
+                      maxLines: 5,
                       style: TextStyle(
                         fontSize: 16.0,
                         overflow: TextOverflow.clip,
